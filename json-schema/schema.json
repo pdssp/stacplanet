@@ -1,209 +1,260 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/template/v1.0.0/schema.json#",
-  "title": "Template Extension",
-  "description": "STAC Template Extension for STAC Items and STAC Collections.",
-  "oneOf": [
+  "$id": "https://raw.githubusercontent.com/malapert/pdssp_schema/main/schema.json",
+  "title": "PDSSP Planetary Data Schema for STACPlanet Items and Collections",
+  "description": "Schema defining PDSSP-specific keywords, constraints, and extensions for planetary imagery and data products. Applies to both STAC Items and Collections, with mandatory fields for solar system targets, product types, and processing levels. For items, ssys:targets, ssys:target_class, version, product:type, and processing:level are required. For collections, ssys:targets, ssys:target_class, product:type, and processing:level are required.",
+  "type": "object",
+  "allOf": [
     {
-      "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/stac_extensions"
-        },
-        {
-          "type": "object",
-          "required": [
-            "type",
-            "properties",
-            "assets"
-          ],
-          "properties": {
-            "type": {
-              "const": "Feature"
-            },
-            "properties": {
-              "allOf": [
-                {
-                  "$comment": "Require fields here for Item Properties.",
-                  "required": [
-                    "template:new_field"
-                  ]
-                },
-                {
-                  "$ref": "#/definitions/fields"
-                }
-              ]
-            },
-            "assets": {
-              "$comment": "This validates the fields in Item Assets, but does not require them.",
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/definitions/fields"
-              }
-            }
+      "if": {
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "const": "Feature"
           }
         }
-      ]
+      },
+      "then": {
+        "$ref": "#/definitions/item"
+      }
     },
     {
-      "$comment": "This is the schema for STAC Collections.",
-      "type": "object",
-      "allOf": [
-        {
-          "required": [
-            "type"
-          ],
-          "properties": {
-            "type": {
-              "const": "Collection"
-            }
-          }
-        },
-        {
-          "$ref": "#/definitions/stac_extensions"
-        }
-      ],
-      "anyOf": [
-        {
-          "$comment": "This is the schema for the top-level fields in a Collection. Remove this if this extension does not define top-level fields for Collections.",
-          "allOf": [
-            {
-              "$comment": "Require fields here for Collections (top-level).",
-              "required": [
-                "template:new_field"
-              ]
-            },
-            {
-              "$ref": "#/definitions/fields"
-            }
-          ]
-        },
-        {
-          "$comment": "This validates the fields in Collection Assets, but does not require them.",
-          "required": [
-            "assets"
-          ],
-          "properties": {
-            "assets": {
-              "type": "object",
-              "not": {
-                "additionalProperties": {
-                  "not": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/require_any_field"
-                      },
-                      {
-                        "$ref": "#/definitions/fields"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "$comment": "This is the schema for the fields in Item Asset Definitions. It doesn't require any fields.",
-          "required": [
-            "item_assets"
-          ],
-          "properties": {
-            "item_assets": {
-              "type": "object",
-              "not": {
-                "additionalProperties": {
-                  "not": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/require_any_field"
-                      },
-                      {
-                        "$ref": "#/definitions/fields"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existence of the properties, but not the schema of the summaries.",
-          "required": [
-            "summaries"
-          ],
-          "properties": {
-            "summaries": {
-              "$ref": "#/definitions/require_any_field"
-            }
+      "if": {
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "const": "Collection"
           }
         }
-      ]
+      },
+      "then": {
+        "$ref": "#/definitions/collection"
+      }
     }
   ],
   "definitions": {
-    "stac_extensions": {
+    "item": {
       "type": "object",
       "required": [
+        "geometry",
+        "properties",
         "stac_extensions"
+      ],
+      "properties": {
+        "geometry": {
+          "type": ["object", "null"]
+        },
+        "stac_extensions": {
+          "type": "array",
+          "if": {
+            "properties": {
+              "geometry": {
+                "type": "null"
+              }
+            },
+            "required": ["geometry"]
+          },
+          "then": {
+            "allOf": [
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/ssys/"
+                }
+              },
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/product/"
+                }
+              },
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/processing/"
+                }
+              }
+            ]
+          },
+          "else": {
+            "allOf": [
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/ssys/"
+                }
+              },
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/projection/"
+                }
+              },
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/version/"
+                }
+              },
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/product/"
+                }
+              },
+              {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/processing/"
+                }
+              }
+            ]
+          }
+        },
+        "properties": {
+          "$ref": "#/definitions/fields"
+        }
+      }
+    },
+    "collection": {
+      "type": "object",
+      "required": [
+        "stac_extensions",
+        "properties"
       ],
       "properties": {
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+            "allOf": [
+              {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/ssys/"
+              },
+              {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/processing/"
+              },
+              {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/product/"
+              }
+            ]
+          }
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "ssys:targets",
+            "ssys:target_class",
+            "product:type",
+            "processing:level"
+          ],
+          "properties": {
+            "ssys:targets": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "enum": ["Mercury", "Venus", "Mars", "Moon", "Titan"]
+              },
+              "description": "List of solar system targets covered by the collection. At least one target is required."
+            },
+            "ssys:target_class": {
+              "type": "string",
+              "enum": ["planet", "satellite"],
+              "description": "Classification of the primary target (e.g., planet, satellite)."
+            },
+            "product:type": {
+              "type": "string",
+              "enum": [
+                "Cube",
+                "Spectrum",
+                "Spectral Cube",
+                "Image",
+                "Map",
+                "Volume",
+                "Time Series",
+                "Dynamic Spectrum",
+                "Catalog",
+                "Spatial Vector"
+              ],
+              "description": "Type of the data product. This field is mandatory."
+            },
+            "processing:level": {
+              "type": "string",
+              "enum": ["Ancillary", "Raw", "Calibrated", "Derived"],
+              "description": "Processing level of the data product. This field is mandatory."
+            }
           }
         }
       }
     },
-    "require_any_field": {
-      "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
-      "anyOf": [
-        {"required": ["template:new_field"]},
-        {"required": ["template:xyz"]},
-        {"required": ["template:another_one"]}
-      ]
-    },
     "fields": {
-      "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
       "type": "object",
+      "required": [
+        "ssys:targets",
+        "ssys:target_class",
+        "version",
+        "product:type",
+        "processing:level"
+      ],
       "properties": {
-        "template:new_field": {
-          "type": "string"
-        },
-        "template:xyz": {
-          "type": "object",
-          "required": [
-            "x",
-            "y",
-            "z"
-          ],
-          "properties": {
-            "x": {
-              "type": "number"
-            },
-            "y": {
-              "type": "number"
-            },
-            "z": {
-              "type": "number"
-            }
-          }
-        },
-        "template:another_one": {
+        "ssys:targets": {
           "type": "array",
+          "minItems": 1,
           "items": {
-            "type": "number"
-          }
+            "enum": ["Mercury", "Venus", "Mars", "Moon", "Titan"]
+          },
+          "description": "List of solar system targets covered by the data. At least one target is required."
+        },
+        "ssys:target_class": {
+          "type": "string",
+          "enum": ["planet", "satellite"],
+          "description": "Classification of the primary target (e.g., planet, satellite)."
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Version identifier for the data product. This field is mandatory for items."
+        },
+        "product:type": {
+          "type": "string",
+          "enum": [
+            "Cube",
+            "Spectrum",
+            "Spectral Cube",
+            "Image",
+            "Map",
+            "Volume",
+            "Time Series",
+            "Dynamic Spectrum",
+            "Catalog",
+            "Spatial Vector"
+          ],
+          "description": "Type of the data product. This field is mandatory."
+        },
+        "processing:level": {
+          "type": "string",
+          "enum": ["Ancillary", "Raw", "Calibrated", "Derived"],
+          "description": "Processing level of the data product. This field is mandatory."
+        },
+        "pdssp:solar_longitude": {
+          "type": "number",
+          "description": "Solar longitude of the target at the time of observation (optional)."
+        },
+        "pdssp:solar_distance": {
+          "type": "number",
+          "description": "Distance from the Sun to the target at the time of observation, in astronomical units (optional)."
+        },
+        "pdssp:map_resolution": {
+          "type": "number",
+          "description": "Spatial resolution of the map, in meters per pixel (optional)."
+        },
+        "pdssp:map_scale": {
+          "type": "number",
+          "description": "Scale of the map (optional)."
         }
-      },
-      "patternProperties": {
-        "^(?!template:)": {
-          "$comment": "Above, change `template` to the prefix of this extension"
-        }
-      },
-      "additionalProperties": false
+      }
     }
   }
 }

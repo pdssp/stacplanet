@@ -1,73 +1,144 @@
 {
-  "stac_version": "1.0.0",
-  "stac_extensions": [
-    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+  "id": "mars-ody-themis-visabr",
+  "description": "Thermal Emission Imaging System PDS3 Visible Apparent Brightness Data from 2001 Mars Odyssey Orbiter (Mars). 262,579 products available.",
+  "stac_version": "1.1.0",
+  "links": [
+    {
+      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-themis-visabr",
+      "rel": "self",
+      "type": "application/json",
+      "title": "mars-ody-themis-visabr collection"
+    },
+    {
+      "href": "https://odestac.staging.157.136.252.249.nip.io/",
+      "rel": "root",
+      "type": "application/json",
+      "title": "Root catalog"
+    },
+    {
+      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-themis-visabr/items",
+      "rel": "items",
+      "type": "application/geo+json",
+      "title": "mars-ody-themis-visabr items"
+    },
+    {
+      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-themis-visabr/queryables",
+      "rel": "queryables",
+      "type": "application/schema+json",
+      "title": "mars-ody-themis-visabr queryable properties"
+    }
   ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+    "https://stac-extensions.github.io/product/v1.0.0/schema.json",
+    "https://pdssp.github.io/stacplanet/v1.0.0/schema.json"
+  ],
+  "title": "2001 Mars Odyssey Orbiter — Thermal Emission Imaging System PDS3 Visible Apparent Brightness Data",
   "type": "Collection",
-  "id": "collection",
-  "title": "A title",
-  "description": "A description",
-  "license": "Apache-2.0",
+  "assets": {
+
+  },
+  "license": "CC0-1.0",
   "extent": {
     "spatial": {
       "bbox": [
-        [
-          172.9,
-          1.3,
-          173,
-          1.4
-        ]
+        [-180, -90, 180, 90]
       ]
     },
     "temporal": {
       "interval": [
         [
-          "2015-06-23T00:00:00Z",
-          null
+          "2002-06-30T04:14:47.842000Z",
+          "2021-05-28T22:34:42.436000Z"
         ]
       ]
     }
   },
-  "template:new_field": "test",
-  "template:xyz": {
-    "x": 1,
-    "y": 2,
-    "z": 3
-  },
-  "template:another_one": [
-    1,
-    2,
-    3
+  "keywords": [
+    "target:mars",
+    "platform:ody",
+    "instru:themis",
+    "type:visabr",
+    "dataset:ody-m-thm-3-visabr-v1.0",
+    "with_footprint",
+    "with_ls",
+    "with_emission",
+    "with_phase",
+    "with_incidence",
+    "with_obstime"
   ],
-  "assets": {
-    "example": {
-      "href": "https://example.com/examples/file.xyz",
-      "template:new_field": "test"
-    }
-  },
-  "item_assets": {
-    "data": {
+  "providers": [
+    {
+      "name": "NASA PDS Geosciences Node / ODE",
+      "description": "NASA Planetary Data System",
       "roles": [
-        "data"
+        "host"
       ],
-      "template:new_field": "test"
+      "url": "https://ode.rsl.wustl.edu/"
     }
-  },
+  ],
   "summaries": {
-    "datetime": {
-      "minimum": "2015-06-23T00:00:00Z",
-      "maximum": "2019-07-10T13:44:56Z"
-    }
-  },
-  "links": [
-    {
-      "href": "https://example.com/examples/collection.json",
-      "rel": "self"
+    "mission": [
+      "2001 MARS ODYSSEY"
+    ],
+    "target": [
+      "Mars"
+    ],
+    "platform": [
+      "2001 Mars Odyssey Orbiter (ODY)"
+    ],
+    "instruments": [
+      "Thermal Emission Imaging System (THEMIS)"
+    ],
+    "product_name": [
+      "VISABR"
+    ],
+    "processing:level": [
+      "Calibrated"
+    ],
+    "product:type": [
+      "Image"
+    ],
+    "has_footprints": [true],
+    "has_observation_times": [true],
+    "has_emission_angles": [true],
+    "has_phase_angles": [true],
+    "has_incidence_angles": [true],
+    "has_solar_longitudes": [true],
+    "orbits": {
+      "minimum": 2400,
+      "maximum": 86296
     },
-    {
-      "href": "https://example.com/examples/item.json",
-      "rel": "item"
-    }
-  ]
+    "observationTime": {
+      "minimum": "2002-06-30T04:14:47.842Z",
+      "maximum": "2021-05-28T22:34:42.436Z"
+    },
+    "productId": {
+      "minimum": "V02400006ABR",
+      "maximum": "V86296003ABR"
+    },
+    "sci:publications": [
+      {
+        "doi": "10.17189/1520297",
+        "citation": "Christensen, P.R., ODYSSEY THEMIS VIS ABR V1.0, ODY-M-THM-3-VISABR-V1.0, Mars Odyssey THEMIS Standard Products, NASA Planetary Data Systems, 2002."
+      }
+    ]
+  },
+  "_ode": {
+    "ODEMetaDB": "mars",
+    "ihid": "ODY",
+    "iid": "THEMIS",
+    "pt": "VISABR",
+    "multi_instrument": false
+  },
+  "ssys:targets": [
+    "Mars"
+  ],
+  "ssys:target_class": "planet",
+  "pdsode:dataset_id": "ODY-M-THM-3-VISABR-V1.0",
+  "pdsode:number_of_products": 262579,
+  "pdsode:product_name": "PDS3 Visible Apparent Brightness Data",
+  "target": "MARS"
 }

@@ -7,7 +7,9 @@
   "allOf": [
     {
       "if": {
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "properties": {
           "type": {
             "const": "Feature"
@@ -20,7 +22,9 @@
     },
     {
       "if": {
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "properties": {
           "type": {
             "const": "Collection"
@@ -42,7 +46,10 @@
       ],
       "properties": {
         "geometry": {
-          "type": ["object", "null"]
+          "type": [
+            "object",
+            "null"
+          ]
         },
         "stac_extensions": {
           "type": "array",
@@ -52,7 +59,9 @@
                 "type": "null"
               }
             },
-            "required": ["geometry"]
+            "required": [
+              "geometry"
+            ]
           },
           "then": {
             "allOf": [
@@ -125,22 +134,26 @@
       "properties": {
         "stac_extensions": {
           "type": "array",
-          "contains": {
-            "allOf": [
-              {
+          "allOf": [
+            {
+              "contains": {
                 "type": "string",
                 "pattern": "stac-extensions\\.github\\.io/ssys/"
-              },
-              {
+              }
+            },
+            {
+              "contains": {
                 "type": "string",
                 "pattern": "stac-extensions\\.github\\.io/processing/"
-              },
-              {
+              }
+            },
+            {
+              "contains": {
                 "type": "string",
                 "pattern": "stac-extensions\\.github\\.io/product/"
               }
-            ]
-          }
+            }
+          ]
         },
         "properties": {
           "type": "object",
@@ -155,13 +168,22 @@
               "type": "array",
               "minItems": 1,
               "items": {
-                "enum": ["Mercury", "Venus", "Mars", "Moon", "Titan"]
+                "enum": [
+                  "Mercury",
+                  "Venus",
+                  "Mars",
+                  "Moon",
+                  "Titan"
+                ]
               },
               "description": "List of solar system targets covered by the collection. At least one target is required."
             },
             "ssys:target_class": {
               "type": "string",
-              "enum": ["planet", "satellite"],
+              "enum": [
+                "planet",
+                "satellite"
+              ],
               "description": "Classification of the primary target (e.g., planet, satellite)."
             },
             "product:type": {
@@ -182,7 +204,12 @@
             },
             "processing:level": {
               "type": "string",
-              "enum": ["Ancillary", "Raw", "Calibrated", "Derived"],
+              "enum": [
+                "Ancillary",
+                "Raw",
+                "Calibrated",
+                "Derived"
+              ],
               "description": "Processing level of the data product. This field is mandatory."
             }
           }
@@ -203,13 +230,22 @@
           "type": "array",
           "minItems": 1,
           "items": {
-            "enum": ["Mercury", "Venus", "Mars", "Moon", "Titan"]
+            "enum": [
+              "Mercury",
+              "Venus",
+              "Mars",
+              "Moon",
+              "Titan"
+            ]
           },
           "description": "List of solar system targets covered by the data. At least one target is required."
         },
         "ssys:target_class": {
           "type": "string",
-          "enum": ["planet", "satellite"],
+          "enum": [
+            "planet",
+            "satellite"
+          ],
           "description": "Classification of the primary target (e.g., planet, satellite)."
         },
         "version": {
@@ -235,7 +271,12 @@
         },
         "processing:level": {
           "type": "string",
-          "enum": ["Ancillary", "Raw", "Calibrated", "Derived"],
+          "enum": [
+            "Ancillary",
+            "Raw",
+            "Calibrated",
+            "Derived"
+          ],
           "description": "Processing level of the data product. This field is mandatory."
         },
         "pdssp:solar_longitude": {

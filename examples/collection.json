@@ -37,14 +37,25 @@
   ],
   "title": "2001 Mars Odyssey Orbiter — Thermal Emission Imaging System PDS3 Visible Apparent Brightness Data",
   "type": "Collection",
-  "assets": {
-
-  },
+  "assets": {},
   "license": "CC0-1.0",
+  "properties": {
+    "ssys:targets": [
+      "Mars"
+    ],
+    "ssys:target_class": "planet",
+    "product:type": "Image",
+    "processing:level": "Calibrated"
+  },
   "extent": {
     "spatial": {
       "bbox": [
-        [-180, -90, 180, 90]
+        [
+          -180,
+          -90,
+          180,
+          90
+        ]
       ]
     },
     "temporal": {
@@ -101,12 +112,24 @@
     "product:type": [
       "Image"
     ],
-    "has_footprints": [true],
-    "has_observation_times": [true],
-    "has_emission_angles": [true],
-    "has_phase_angles": [true],
-    "has_incidence_angles": [true],
-    "has_solar_longitudes": [true],
+    "has_footprints": [
+      true
+    ],
+    "has_observation_times": [
+      true
+    ],
+    "has_emission_angles": [
+      true
+    ],
+    "has_phase_angles": [
+      true
+    ],
+    "has_incidence_angles": [
+      true
+    ],
+    "has_solar_longitudes": [
+      true
+    ],
     "orbits": {
       "minimum": 2400,
       "maximum": 86296

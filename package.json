@@ -1,5 +1,5 @@
 {
-  "name": "stac-extension-template",
+  "name": "stacplanet",
   "version": "1.0.0",
   "scripts": {
     "test": "npm run check-markdown && npm run check-examples",

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://pdssp.github.io/stacplanet/v1.0.0/schema.json",
   "title": "PDSSP Planetary Data Schema for STACPlanet Items and Collections",
-  "description": "Schema defining PDSSP-specific keywords, constraints, and extensions for planetary imagery and data products. Applies to both STAC Items and Collections, with mandatory fields for solar system targets, product types, and processing levels. For items, ssys:targets, ssys:target_class, version, product:type, and processing:level are required. For collections, ssys:targets, ssys:target_class, product:type, and processing:level are required.",
+  "description": "Schema defining PDSSP-specific keywords, constraints, and extensions for planetary imagery and data products. Applies to both STAC Items and Collections, with mandatory fields for solar system targets, product types, and processing levels. For items, ssys:targets, ssys:target_class, version, product:type, and processing:level are required. For collections, ssys:targets, ssys:target_class, product:type, processing:level, and license are required.",
   "type": "object",
   "allOf": [
     {
@@ -161,7 +161,8 @@
             "ssys:targets",
             "ssys:target_class",
             "product:type",
-            "processing:level"
+            "processing:level",
+            "license"
           ],
           "properties": {
             "ssys:targets": {
@@ -211,8 +212,11 @@
                 "Derived"
               ],
               "description": "Processing level of the data product. This field is mandatory."
+            },
+            "license": {
+              "type": "string",
+              "description": "License under which the data is provided. This field is mandatory for collections."
             }
-          }
         }
       }
     },

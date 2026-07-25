@@ -154,42 +154,6 @@
             "object",
             "null"
           ]
-        },
-        "assets": {
-          "type": "object",
-          "additionalProperties": {
-            "allOf": [
-              {
-                "if": {
-                  "properties": {
-                    "roles": {
-                      "contains": {
-                        "const": "data"
-                      }
-                    }
-                  },
-                  "required": [
-                    "roles"
-                  ]
-                },
-                "then": {
-                  "properties": {
-                    "type": {
-                      "enum": [
-                        "image/tiff; application=geotiff; profile=cloud-optimized"
-                      ]
-                    },
-                    "file:checksum": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "file:checksum"
-                  ]
-                }
-              }
-            ]
-          }
         }
       },
       "allOf": [
@@ -261,7 +225,8 @@
       "type": "object",
       "required": [
         "stac_extensions",
-        "properties"
+        "properties",
+        "license"
       ],
       "properties": {
         "stac_extensions": {
@@ -293,8 +258,7 @@
             "ssys:targets",
             "ssys:target_class",
             "product:type",
-            "processing:level",
-            "license"
+            "processing:level"
           ],
           "properties": {
             "ssys:targets": {
@@ -344,12 +308,12 @@
                 "Derived"
               ],
               "description": "Processing level of the data product. This field is mandatory."
-            },
-            "license": {
-              "type": "string",
-              "description": "License under which the data is provided."
             }
           }
+        },
+        "license": {
+          "type": "string",
+          "description": "License under which the data is provided."
         }
       }
     }

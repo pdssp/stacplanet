@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://pdssp.github.io/stacplanet/v1.0.0/schema.json",
   "title": "PDSSP Planetary Data Schema for STACPlanet Items and Collections",
-  "description": "Schema defining PDSSP-specific keywords, constraints, and extensions for planetary imagery and data products. Applies to both STAC Items and Collections, with mandatory fields for solar system targets, product types, and processing levels. For items, ssys:targets, ssys:target_class, version, product:type, and processing:level are required. For collections, ssys:targets, ssys:target_class, product:type, processing:level, and license are required.",
+  "description": "Profile defining PDSSP-specific constraints for planetary data products. Applies to both STAC Items and Collections. Required extensions on an Item depend on whether the product is located: a null geometry relaxes the projection and version requirements.",
   "type": "object",
   "allOf": [
     {
@@ -40,90 +40,222 @@
     "item": {
       "type": "object",
       "required": [
-        "geometry",
+        "stac_extensions",
         "properties",
-        "stac_extensions"
+        "geometry"
       ],
       "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "allOf": [
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/ssys/"
+              }
+            },
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/product/"
+              }
+            },
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/processing/"
+              }
+            }
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "ssys:targets",
+            "ssys:target_class",
+            "version",
+            "product:type",
+            "processing:level"
+          ],
+          "properties": {
+            "ssys:targets": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "Mercury",
+                  "Venus",
+                  "Mars",
+                  "Moon",
+                  "Titan"
+                ]
+              },
+              "minItems": 1,
+              "description": "List of solar system targets covered by the data. At least one target is required."
+            },
+            "ssys:target_class": {
+              "type": "string",
+              "enum": [
+                "planet",
+                "satellite"
+              ],
+              "description": "Classification of the primary target (e.g. planet, satellite)."
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Version identifier for the data product. Mandatory for items."
+            },
+            "product:type": {
+              "type": "string",
+              "enum": [
+                "Cube",
+                "Spectrum",
+                "Spectral Cube",
+                "Image",
+                "Map",
+                "Volume",
+                "Time Series",
+                "Dynamic Spectrum",
+                "Catalog",
+                "Spatial Vector"
+              ],
+              "description": "Type of the data product. This field is mandatory."
+            },
+            "processing:level": {
+              "type": "string",
+              "enum": [
+                "Ancillary",
+                "Raw",
+                "Calibrated",
+                "Derived"
+              ],
+              "description": "Processing level of the data product. This field is mandatory."
+            },
+            "pdssp:solar_longitude": {
+              "type": "number",
+              "description": "Solar longitude of the target at the time of observation."
+            },
+            "pdssp:solar_distance": {
+              "type": "number",
+              "description": "Distance from the Sun to the target, in astronomical units."
+            },
+            "pdssp:map_resolution": {
+              "type": "number",
+              "description": "Spatial resolution of the map, in metres per pixel."
+            },
+            "pdssp:map_scale": {
+              "type": "number",
+              "description": "Scale of the map."
+            }
+          }
+        },
         "geometry": {
           "type": [
             "object",
             "null"
           ]
         },
-        "stac_extensions": {
-          "type": "array",
-          "if": {
-            "properties": {
-              "geometry": {
-                "type": "null"
-              }
-            },
-            "required": [
-              "geometry"
-            ]
-          },
-          "then": {
+        "assets": {
+          "type": "object",
+          "additionalProperties": {
             "allOf": [
               {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/ssys/"
-                }
-              },
-              {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/product/"
-                }
-              },
-              {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/processing/"
-                }
-              }
-            ]
-          },
-          "else": {
-            "allOf": [
-              {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/ssys/"
-                }
-              },
-              {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/projection/"
-                }
-              },
-              {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/version/"
-                }
-              },
-              {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/product/"
-                }
-              },
-              {
-                "contains": {
-                  "type": "string",
-                  "pattern": "stac-extensions\\.github\\.io/processing/"
+                "if": {
+                  "properties": {
+                    "roles": {
+                      "contains": {
+                        "const": "data"
+                      }
+                    }
+                  },
+                  "required": [
+                    "roles"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff; application=geotiff; profile=cloud-optimized"
+                      ]
+                    },
+                    "file:checksum": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "file:checksum"
+                  ]
                 }
               }
             ]
           }
-        },
-        "properties": {
-          "$ref": "#/definitions/fields"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "geometry"
+            ],
+            "properties": {
+              "geometry": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stac_extensions": {
+                "allOf": [
+                  {
+                    "contains": {
+                      "type": "string",
+                      "pattern": "stac-extensions\\.github\\.io/projection/"
+                    }
+                  },
+                  {
+                    "contains": {
+                      "type": "string",
+                      "pattern": "stac-extensions\\.github\\.io/version/"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "properties": {
+                "required": [
+                  "product:type"
+                ],
+                "properties": {
+                  "product:type": {
+                    "const": "Map"
+                  }
+                }
+              }
+            },
+            "required": [
+              "properties"
+            ]
+          },
+          "then": {
+            "properties": {
+              "properties": {
+                "required": [
+                  "pdssp:map_resolution"
+                ]
+              }
+            }
+          }
+        }
+      ]
     },
     "collection": {
       "type": "object",
@@ -167,7 +299,6 @@
           "properties": {
             "ssys:targets": {
               "type": "array",
-              "minItems": 1,
               "items": {
                 "enum": [
                   "Mercury",
@@ -177,7 +308,8 @@
                   "Titan"
                 ]
               },
-              "description": "List of solar system targets covered by the collection. At least one target is required."
+              "minItems": 1,
+              "description": "List of solar system targets covered by the data. At least one target is required."
             },
             "ssys:target_class": {
               "type": "string",
@@ -185,7 +317,7 @@
                 "planet",
                 "satellite"
               ],
-              "description": "Classification of the primary target (e.g., planet, satellite)."
+              "description": "Classification of the primary target (e.g. planet, satellite)."
             },
             "product:type": {
               "type": "string",
@@ -215,89 +347,9 @@
             },
             "license": {
               "type": "string",
-              "description": "License under which the data is provided. This field is mandatory for collections."
+              "description": "License under which the data is provided."
             }
-        }
-      }
-    },
-    "fields": {
-      "type": "object",
-      "required": [
-        "ssys:targets",
-        "ssys:target_class",
-        "version",
-        "product:type",
-        "processing:level"
-      ],
-      "properties": {
-        "ssys:targets": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "enum": [
-              "Mercury",
-              "Venus",
-              "Mars",
-              "Moon",
-              "Titan"
-            ]
-          },
-          "description": "List of solar system targets covered by the data. At least one target is required."
-        },
-        "ssys:target_class": {
-          "type": "string",
-          "enum": [
-            "planet",
-            "satellite"
-          ],
-          "description": "Classification of the primary target (e.g., planet, satellite)."
-        },
-        "version": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Version identifier for the data product. This field is mandatory for items."
-        },
-        "product:type": {
-          "type": "string",
-          "enum": [
-            "Cube",
-            "Spectrum",
-            "Spectral Cube",
-            "Image",
-            "Map",
-            "Volume",
-            "Time Series",
-            "Dynamic Spectrum",
-            "Catalog",
-            "Spatial Vector"
-          ],
-          "description": "Type of the data product. This field is mandatory."
-        },
-        "processing:level": {
-          "type": "string",
-          "enum": [
-            "Ancillary",
-            "Raw",
-            "Calibrated",
-            "Derived"
-          ],
-          "description": "Processing level of the data product. This field is mandatory."
-        },
-        "pdssp:solar_longitude": {
-          "type": "number",
-          "description": "Solar longitude of the target at the time of observation (optional)."
-        },
-        "pdssp:solar_distance": {
-          "type": "number",
-          "description": "Distance from the Sun to the target at the time of observation, in astronomical units (optional)."
-        },
-        "pdssp:map_resolution": {
-          "type": "number",
-          "description": "Spatial resolution of the map, in meters per pixel (optional)."
-        },
-        "pdssp:map_scale": {
-          "type": "number",
-          "description": "Scale of the map (optional)."
+          }
         }
       }
     }

@@ -1,52 +1,30 @@
 {
-  "id": "mars-ody-themis-visabr",
-  "description": "Thermal Emission Imaging System PDS3 Visible Apparent Brightness Data from 2001 Mars Odyssey Orbiter (Mars). 262,579 products available.",
+  "type": "Collection",
   "stac_version": "1.1.0",
-  "links": [
-    {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-themis-visabr",
-      "rel": "self",
-      "type": "application/json",
-      "title": "mars-ody-themis-visabr collection"
-    },
-    {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/",
-      "rel": "root",
-      "type": "application/json",
-      "title": "Root catalog"
-    },
-    {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-themis-visabr/items",
-      "rel": "items",
-      "type": "application/geo+json",
-      "title": "mars-ody-themis-visabr items"
-    },
-    {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-themis-visabr/queryables",
-      "rel": "queryables",
-      "type": "application/schema+json",
-      "title": "mars-ody-themis-visabr queryable properties"
-    }
-  ],
   "stac_extensions": [
-    "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
     "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
     "https://stac-extensions.github.io/product/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
+    "https://stac-extensions.github.io/eo/v2.0.0/schema.json",
     "https://pdssp.github.io/stacplanet/v1.0.0/schema.json"
   ],
-  "title": "2001 Mars Odyssey Orbiter — Thermal Emission Imaging System PDS3 Visible Apparent Brightness Data",
-  "type": "Collection",
-  "assets": {},
+  "id": "MRO-M-HIRISE-5-DTM-V1.0",
+  "title": "MRO MARS HIGH RESOLUTION IMAGING SCIENCE EXPERIMENT DTM V1.0",
+  "description": "Digital Terrain Models (DTMs) of Mars produced from stereo pairs of HiRISE observations using photogrammetric stereo-matching, each accompanied by one or more orthorectified images draped on it.",
   "license": "CC0-1.0",
-  "properties": {
-    "ssys:targets": [
-      "Mars"
-    ],
-    "ssys:target_class": "planet",
-    "product:type": "Image",
-    "processing:level": "Calibrated"
-  },
+  "sci:publications": [
+    {
+      "doi": "10.1029/2007JE003000",
+      "citation": "Kirk, R.L., Howington-Kraus, E., Rosiek, M.R., Anderson, J.A., Archinal, B.A., Becker, K.J., Cook, D.A., Galuszka, D.M., Geissler, P.E., Hare, T.M., Holmberg, I.M., Keszthelyi, L.P., Redding, B.L., Delamere, W.A., Gallagher, D., Chapel, J.D., Eliason, E.M., King, R., McEwen, A.S. (2008), Ultrahigh resolution topographic mapping of Mars with MRO HiRISE stereo images: Meter-scale slopes of candidate Phoenix landing sites, Journal of Geophysical Research, 113, E00A24, doi:10.1029/2007JE003000."
+    }
+  ],
+  "ssys:targets": [
+    "Mars"
+  ],
+  "ssys:target_class": "planet",
+  "proj:wkt2": "GEODCRS[\"Mars (2015) / Ocentric\",\n    DATUM[\"Mars (2015)\",\n    \tELLIPSOID[\"Mars (2015)\", 3396190, 169.8944472236118,\n\t\tLENGTHUNIT[\"metre\", 1, ID[\"EPSG\", 9001]]],\n\t\tANCHOR[\"Viking 1 lander : 47.95137 W\"]],\n    \tPRIMEM[\"Reference Meridian\", 0,\n            ANGLEUNIT[\"degree\", 0.0174532925199433, ID[\"EPSG\", 9122]]],\n\tCS[spherical, 2],\n\t    AXIS[\"planetocentric latitude (U)\", north,\n\t        ORDER[1],\n\t        ANGLEUNIT[\"degree\", 0.0174532925199433]],\n\t    AXIS[\"planetocentric longitude (V)\", east,\n\t        ORDER[2],\n\t        ANGLEUNIT[\"degree\", 0.0174532925199433]],\n\tID[\"IAU\", 49902, 2015],\n\tREMARK[\"Source of IAU Coordinate systems: doi:10.1007/s10569-017-9805-5\"]]",
   "extent": {
     "spatial": {
       "bbox": [
@@ -61,107 +39,62 @@
     "temporal": {
       "interval": [
         [
-          "2002-06-30T04:14:47.842000Z",
-          "2021-05-28T22:34:42.436000Z"
+          "2006-10-03T21:53:19Z",
+          "2025-11-21T23:01:25Z"
         ]
       ]
     }
   },
-  "keywords": [
-    "target:mars",
-    "platform:ody",
-    "instru:themis",
-    "type:visabr",
-    "dataset:ody-m-thm-3-visabr-v1.0",
-    "with_footprint",
-    "with_ls",
-    "with_emission",
-    "with_phase",
-    "with_incidence",
-    "with_obstime"
-  ],
   "providers": [
     {
-      "name": "NASA PDS Geosciences Node / ODE",
-      "description": "NASA Planetary Data System",
+      "name": "Alfred S. McEwen"
+    },
+    {
+      "name": "UNIVERSITY OF ARIZONA",
       "roles": [
-        "host"
-      ],
-      "url": "https://ode.rsl.wustl.edu/"
+        "producer"
+      ]
+    },
+    {
+      "name": "NASA Planetary Data System",
+      "roles": [
+        "host",
+        "licensor"
+      ]
     }
   ],
   "summaries": {
-    "mission": [
-      "2001 MARS ODYSSEY"
-    ],
-    "target": [
-      "Mars"
+    "instruments": [
+      "HIRISE"
     ],
     "platform": [
-      "2001 Mars Odyssey Orbiter (ODY)"
+      "MARS RECONNAISSANCE ORBITER"
     ],
-    "instruments": [
-      "Thermal Emission Imaging System (THEMIS)"
-    ],
-    "product_name": [
-      "VISABR"
+    "eo:center_wavelength": {
+      "minimum": 0.7,
+      "maximum": 0.7
+    },
+    "product:type": [
+      "Digital elevation model",
+      "Orthoimage"
     ],
     "processing:level": [
-      "Calibrated"
+      "Derived"
     ],
-    "product:type": [
-      "Image"
-    ],
-    "has_footprints": [
-      true
-    ],
-    "has_observation_times": [
-      true
-    ],
-    "has_emission_angles": [
-      true
-    ],
-    "has_phase_angles": [
-      true
-    ],
-    "has_incidence_angles": [
-      true
-    ],
-    "has_solar_longitudes": [
-      true
-    ],
-    "orbits": {
-      "minimum": 2400,
-      "maximum": 86296
-    },
-    "observationTime": {
-      "minimum": "2002-06-30T04:14:47.842Z",
-      "maximum": "2021-05-28T22:34:42.436Z"
-    },
-    "productId": {
-      "minimum": "V02400006ABR",
-      "maximum": "V86296003ABR"
-    },
-    "sci:publications": [
-      {
-        "doi": "10.17189/1520297",
-        "citation": "Christensen, P.R., ODYSSEY THEMIS VIS ABR V1.0, ODY-M-THM-3-VISABR-V1.0, Mars Odyssey THEMIS Standard Products, NASA Planetary Data Systems, 2002."
-      }
+    "pdssp:method": [
+      "Photogrammetry"
     ]
   },
-  "_ode": {
-    "ODEMetaDB": "mars",
-    "ihid": "ODY",
-    "iid": "THEMIS",
-    "pt": "VISABR",
-    "multi_instrument": false
-  },
-  "ssys:targets": [
-    "Mars"
-  ],
-  "ssys:target_class": "planet",
-  "pdsode:dataset_id": "ODY-M-THM-3-VISABR-V1.0",
-  "pdsode:number_of_products": 262579,
-  "pdsode:product_name": "PDS3 Visible Apparent Brightness Data",
-  "target": "MARS"
+  "links": [
+    {
+      "rel": "via",
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/",
+      "title": "Source PDS3 archive volume for this collection"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/DOCUMENT/HIRISE_RDR_SIS.PDF",
+      "title": "Documentation: HIRISE_RDR_SIS.PDF"
+    }
+  ]
 }

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://pdssp.github.io/stacplanet/v1.0.0/schema.json",
   "title": "PDSSP Planetary Data Schema for STACPlanet Items and Collections",
-  "description": "Profile defining PDSSP-specific constraints for planetary data products. Applies to both STAC Items and Collections. Required extensions on an Item depend on whether the product is located: a null geometry relaxes the projection and version requirements.",
+  "description": "Profile defining PDSSP-specific constraints for planetary data products. Applies to both STAC Items and Collections. Required extensions on an Item depend on whether the product is located: a null geometry relaxes the projection requirement.",
   "type": "object",
   "allOf": [
     {
@@ -81,24 +81,29 @@
             "ssys:targets": {
               "type": "array",
               "items": {
-                "enum": [
-                  "Mercury",
-                  "Venus",
-                  "Mars",
-                  "Moon",
-                  "Titan"
-                ]
+                "type": "string"
               },
               "minItems": 1,
-              "description": "List of solar system targets covered by the data. At least one target is required."
+              "description": "List of solar system targets covered by the data (e.g. \"Mars\", \"Deimos\", \"Mgs\" for a spacecraft cross-calibration target). At least one target is required. Free text, matching the real ssys v1.1.1 extension's own (unconstrained) field -- not restricted to a short enum of common bodies."
             },
             "ssys:target_class": {
               "type": "string",
               "enum": [
+                "asteroid",
+                "dwarf_planet",
                 "planet",
-                "satellite"
+                "satellite",
+                "comet",
+                "exoplanet",
+                "interplanetary_medium",
+                "sample",
+                "sky",
+                "spacecraft",
+                "spacejunk",
+                "star",
+                "calibration"
               ],
-              "description": "Classification of the primary target (e.g. planet, satellite)."
+              "description": "Classification of the primary target -- the real ssys v1.1.1 extension's own enum (confirmed live against its schema.json), not just \"planet\"/\"satellite\": a calibration frame, a cross-calibration spacecraft target, or a starfield are all real, non-body targets a planetary archive actually has."
             },
             "version": {
               "type": "string",
@@ -108,18 +113,14 @@
             "product:type": {
               "type": "string",
               "enum": [
-                "Cube",
-                "Spectrum",
-                "Spectral Cube",
                 "Image",
-                "Map",
-                "Volume",
-                "Time Series",
-                "Dynamic Spectrum",
-                "Catalog",
-                "Spatial Vector"
+                "Image mosaic",
+                "Orthoimage",
+                "Anaglyph",
+                "Digital elevation model",
+                "Point cloud"
               ],
-              "description": "Type of the data product. This field is mandatory."
+              "description": "Type of the data product, from the PDSSP Thesaurus's Product Type concept scheme (https://pdssp.github.io/pdssp-ontology/thesaurus/) -- deliberately NOT the EPN-TAP dataproduct_type long-name vocabulary (\"image\"/\"volume\"/...): that vocabulary is coarser than a planetary imaging archive needs (e.g. it has no term distinguishing an orthoimage or an anaglyph from a plain image), and mapping to/from EPN-TAP is left to whichever proxy needs it, not enforced here. This field is mandatory."
             },
             "processing:level": {
               "type": "string",
@@ -131,21 +132,24 @@
               ],
               "description": "Processing level of the data product. This field is mandatory."
             },
-            "pdssp:solar_longitude": {
-              "type": "number",
-              "description": "Solar longitude of the target at the time of observation."
-            },
-            "pdssp:solar_distance": {
-              "type": "number",
-              "description": "Distance from the Sun to the target, in astronomical units."
-            },
-            "pdssp:map_resolution": {
-              "type": "number",
-              "description": "Spatial resolution of the map, in metres per pixel."
-            },
-            "pdssp:map_scale": {
-              "type": "number",
-              "description": "Scale of the map."
+            "pdssp:method": {
+              "type": "string",
+              "enum": [
+                "Panchromatic imaging",
+                "Multispectral imaging",
+                "Hyperspectral imaging",
+                "Visible light imaging",
+                "Infrared imaging",
+                "Thermal imaging",
+                "Radar imaging",
+                "Microwave imaging",
+                "Lidar",
+                "Aerial photography",
+                "Photogrammetry",
+                "Stereoscopic imaging",
+                "Remote sensing"
+              ],
+              "description": "How the product was acquired or produced (the technique), e.g. panchromatic imaging, multispectral imaging, stereo photogrammetry. From the PDSSP Thesaurus's Method concept scheme (https://pdssp.github.io/pdssp-ontology/thesaurus/), which reuses the USGS Thesaurus's own \"methods\" facet where it fits and adds PDSSP-specific concepts (Photogrammetry, Stereoscopic imaging) where it doesn't."
             }
           }
         },
@@ -179,12 +183,6 @@
                       "type": "string",
                       "pattern": "stac-extensions\\.github\\.io/projection/"
                     }
-                  },
-                  {
-                    "contains": {
-                      "type": "string",
-                      "pattern": "stac-extensions\\.github\\.io/version/"
-                    }
                   }
                 ]
               }
@@ -193,27 +191,23 @@
         },
         {
           "if": {
+            "required": [
+              "stac_extensions"
+            ],
             "properties": {
-              "properties": {
-                "required": [
-                  "product:type"
-                ],
-                "properties": {
-                  "product:type": {
-                    "const": "Map"
-                  }
+              "stac_extensions": {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/projection/"
                 }
               }
-            },
-            "required": [
-              "properties"
-            ]
+            }
           },
           "then": {
             "properties": {
               "properties": {
                 "required": [
-                  "pdssp:map_resolution"
+                  "proj:wkt2"
                 ]
               }
             }
@@ -225,8 +219,9 @@
       "type": "object",
       "required": [
         "stac_extensions",
-        "properties",
-        "license"
+        "license",
+        "ssys:targets",
+        "ssys:target_class"
       ],
       "properties": {
         "stac_extensions": {
@@ -252,70 +247,125 @@
             }
           ]
         },
-        "properties": {
+        "license": {
+          "type": "string",
+          "description": "License under which the data is provided."
+        },
+        "ssys:targets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "List of solar system targets covered by this collection -- a direct top-level Collection field (not nested under \"properties\", which a STAC Collection does not have, nor under \"summaries\": a collection's own targets/target_class are a fact about the collection itself, same status as its license or providers, not a per-item value distribution). Free text, matching ssys v1.1.1's own unconstrained field."
+        },
+        "ssys:target_class": {
+          "type": "string",
+          "enum": [
+            "asteroid",
+            "dwarf_planet",
+            "planet",
+            "satellite",
+            "comet",
+            "exoplanet",
+            "interplanetary_medium",
+            "sample",
+            "sky",
+            "spacecraft",
+            "spacejunk",
+            "star",
+            "calibration"
+          ],
+          "description": "Classification of this collection's primary target -- same top-level placement and enum as ssys:targets above."
+        },
+        "summaries": {
           "type": "object",
           "required": [
-            "ssys:targets",
-            "ssys:target_class",
             "product:type",
             "processing:level"
           ],
           "properties": {
-            "ssys:targets": {
+            "product:type": {
               "type": "array",
               "items": {
+                "type": "string",
                 "enum": [
-                  "Mercury",
-                  "Venus",
-                  "Mars",
-                  "Moon",
-                  "Titan"
+                  "Image",
+                  "Image mosaic",
+                  "Orthoimage",
+                  "Anaglyph",
+                  "Digital elevation model",
+                  "Point cloud"
                 ]
               },
               "minItems": 1,
-              "description": "List of solar system targets covered by the data. At least one target is required."
-            },
-            "ssys:target_class": {
-              "type": "string",
-              "enum": [
-                "planet",
-                "satellite"
-              ],
-              "description": "Classification of the primary target (e.g. planet, satellite)."
-            },
-            "product:type": {
-              "type": "string",
-              "enum": [
-                "Cube",
-                "Spectrum",
-                "Spectral Cube",
-                "Image",
-                "Map",
-                "Volume",
-                "Time Series",
-                "Dynamic Spectrum",
-                "Catalog",
-                "Spatial Vector"
-              ],
-              "description": "Type of the data product. This field is mandatory."
+              "description": "Every product:type value this collection's items actually use, from the PDSSP Thesaurus's Product Type concept scheme. This field is mandatory."
             },
             "processing:level": {
-              "type": "string",
-              "enum": [
-                "Ancillary",
-                "Raw",
-                "Calibrated",
-                "Derived"
-              ],
-              "description": "Processing level of the data product. This field is mandatory."
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Ancillary",
+                  "Raw",
+                  "Calibrated",
+                  "Derived"
+                ]
+              },
+              "minItems": 1,
+              "description": "Every processing:level value this collection's items actually use. This field is mandatory."
+            },
+            "pdssp:method": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Panchromatic imaging",
+                  "Multispectral imaging",
+                  "Hyperspectral imaging",
+                  "Visible light imaging",
+                  "Infrared imaging",
+                  "Thermal imaging",
+                  "Radar imaging",
+                  "Microwave imaging",
+                  "Lidar",
+                  "Aerial photography",
+                  "Photogrammetry",
+                  "Stereoscopic imaging",
+                  "Remote sensing"
+                ]
+              },
+              "minItems": 1,
+              "description": "Every pdssp:method value this collection's items actually use, from the PDSSP Thesaurus's Method concept scheme."
             }
           }
         },
-        "license": {
-          "type": "string",
-          "description": "License under which the data is provided."
+        "proj:wkt2": {
+          "type": "string"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "stac_extensions"
+            ],
+            "properties": {
+              "stac_extensions": {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/projection/"
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "proj:wkt2"
+            ]
+          }
+        }
+      ]
     }
   }
 }

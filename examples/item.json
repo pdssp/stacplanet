@@ -1,142 +1,151 @@
 {
   "type": "Feature",
+  "stac_version": "1.1.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+    "https://stac-extensions.github.io/product/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
+    "https://pdssp.github.io/stacplanet/v1.0.0/schema.json"
+  ],
+  "id": "DTEEC_001336_1560_001534_1560_U01",
+  "collection": "MRO-M-HIRISE-5-DTM-V1.0",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -33.67700000000002,
+          -23.9697
+        ],
+        [
+          -33.553999999999974,
+          -23.9697
+        ],
+        [
+          -33.553999999999974,
+          -23.7115
+        ],
+        [
+          -33.67700000000002,
+          -23.7115
+        ],
+        [
+          -33.67700000000002,
+          -23.9697
+        ]
+      ]
+    ]
+  },
+  "bbox": [
+    -33.67700000000002,
+    -23.9697,
+    -33.553999999999974,
+    -23.7115
+  ],
   "properties": {
-    "title": "PULSER_SPECTRA_20051122",
-    "description": "Pulser spectrum and associated data.",
-    "datetime": "2005-11-22T11:59:56.922000Z",
-    "created": "2006-05-27T17:03:12.869000Z",
-    "start_datetime": "2005-11-22T00:00:01.925000Z",
-    "end_datetime": "2005-11-22T23:59:51.920000Z",
-    "license": "CC0-1.0",
-    "providers": [],
-    "platform": "2001 Mars Odyssey Orbiter (ODY)",
+    "datetime": "2006-11-08T13:48:04Z",
     "instruments": [
-      "Gamma Ray Spectrometer (GRS)"
+      "HIGH RESOLUTION IMAGING SCIENCE EXPERIMENT (HIRISE)"
     ],
-    "mission": "2001 MARS ODYSSEY",
-    "version": "1.0",
+    "pds:instrument_id": "HIRISE",
+    "pds:platform_id": "MRO",
+    "platform": "MARS RECONNAISSANCE ORBITER (MRO)",
+    "mission": "MARS RECONNAISSANCE ORBITER (MRO)",
+    "description": "Fan/deltaic landform in west Eberswalde Crater",
+    "gsd": 1.01,
+    "version": "1",
+    "product:type": "Digital elevation model",
+    "processing:level": "Derived",
+    "pdssp:method": "Photogrammetry",
+    "proj:shape": [
+      15166,
+      6789
+    ],
+    "proj:code": "IAU_2015:49902",
+    "proj:wkt2": "GEODCRS[\"Mars (2015) / Ocentric\",\n    DATUM[\"Mars (2015)\",\n    \tELLIPSOID[\"Mars (2015)\", 3396190, 169.8944472236118,\n\t\tLENGTHUNIT[\"metre\", 1, ID[\"EPSG\", 9001]]],\n\t\tANCHOR[\"Viking 1 lander : 47.95137 W\"]],\n    \tPRIMEM[\"Reference Meridian\", 0,\n            ANGLEUNIT[\"degree\", 0.0174532925199433, ID[\"EPSG\", 9122]]],\n\tCS[spherical, 2],\n\t    AXIS[\"planetocentric latitude (U)\", north,\n\t        ORDER[1],\n\t        ANGLEUNIT[\"degree\", 0.0174532925199433]],\n\t    AXIS[\"planetocentric longitude (V)\", east,\n\t        ORDER[2],\n\t        ANGLEUNIT[\"degree\", 0.0174532925199433]],\n\tID[\"IAU\", 49902, 2015],\n\tREMARK[\"Source of IAU Coordinate systems: doi:10.1007/s10569-017-9805-5\"]]",
+    "proj:centroid": {
+      "lon": -33.6155,
+      "lat": -23.840600000000002
+    },
     "ssys:targets": [
       "Mars"
     ],
     "ssys:target_class": "planet",
-    "product:type": "Spectrum",
-    "processing:level": "Raw",
-    "pdsode:ode_id": "26757775",
-    "pdsode:LabelFileName": "pulser_spectra_20051122.lbl",
-    "pdsode:Data_Set_Id": "ODY-M-GRS-2-EDR-V1.0",
-    "pdsode:Label_product_type": "PULSER_SPECTRA",
-    "pdsode:ODE_notes": [
-      "NOTE: ODE Changed Product Type PULSER_SPECTRA to PULSRS",
-      "NOTE: Spacecraft Id used as Instrument Host Id",
-      "NOTE: Instrument Id set by ODE",
-      "NOTE: Observation time set to mid-point between start time and stop time"
-    ],
-    "pdsode:SpaceCraft_clock_start_count": "209173772403",
-    "pdsode:SpaceCraft_clock_stop_count": "209195888276",
-    "pdsode:PDSVolume_Id": "ODGE1_XXXX",
-    "pdsode:RelativePathtoVol": "2005\\20051122\\"
+    "pds:volume_id": "MROHR_0001",
+    "pds:file_name_specification": "DTM/PSP/ORB_001300_001399/PSP_001336_1560_PSP_001534_1560/DTEEC_001336_1560_001534_1560_U01.IMG",
+    "pds:product_id": "DTEEC_001336_1560_001534_1560_U01",
+    "pds:product_version_id": "1",
+    "pds:left_observation_id": "PSP_001336_1560",
+    "pds:right_observation_id": "PSP_001534_1560",
+    "license": "CC0-1.0"
   },
-  "id": "PULSER_SPECTRA_20051122",
-  "stac_version": "1.1.0",
   "assets": {
-    "label": {
-      "href": "https://pds-geosciences.wustl.edu/ody/ody-m-grs-2-edr-v1/odge1_xxxx/2005/20051122/pulser_spectra_20051122.lbl",
-      "type": "image/x-pds",
-      "title": "PDS3 label",
-      "description": "PDS3 detached label describing the product",
+    "data": {
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/DTM/PSP/ORB_001300_001399/PSP_001336_1560_PSP_001534_1560/DTEEC_001336_1560_001534_1560_U01.IMG",
       "roles": [
-        "metadata"
+        "data"
+      ],
+      "title": "PDS3 product",
+      "type": "image/x-pds",
+      "bands": [
+        {
+          "name": "DTM",
+          "description": "Digital Terrain Model: pixel values are elevations in meters relative to the Mars 2000 equipotential surface (areoid), derived by stereo photogrammetry from the two source observations (see pds:left_observation_id/pds:right_observation_id).",
+          "data_type": "float32",
+          "raster:bits_per_sample": 32,
+          "nodata": -3.4028226550889045e+38,
+          "raster:spatial_resolution": 1.01
+        }
       ]
     },
-    "PULSER_SPECTRA_20051122.DAT": {
-      "href": "https://pds-geosciences.wustl.edu/ody/ody-m-grs-2-edr-v1/odge1_xxxx/2005/20051122/pulser_spectra_20051122.dat",
-      "type": "application/octet-stream",
-      "title": "PULSER_SPECTRA_20051122.DAT",
-      "description": "PRODUCT DATA FILE",
+    "browse": {
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_001300_001399/PSP_001336_1560_PSP_001534_1560/DTEEC_001336_1560_001534_1560_U01.br.jpg",
       "roles": [
-        "data"
+        "overview"
       ],
-      "creation_date": "2011-12-23T17:12:04.000",
-      "file:size": 7030784,
-      "type_image": "Product"
+      "type": "image/jpeg"
     },
-    "PULSER_SPECTRA_20051122.LBL": {
-      "href": "https://pds-geosciences.wustl.edu/ody/ody-m-grs-2-edr-v1/odge1_xxxx/2005/20051122/pulser_spectra_20051122.lbl",
-      "type": "text/plain",
-      "title": "PULSER_SPECTRA_20051122.LBL",
-      "description": "PRODUCT LABEL FILE",
+    "thumbnail": {
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/EXTRAS/DTM/PSP/ORB_001300_001399/PSP_001336_1560_PSP_001534_1560/DTEEC_001336_1560_001534_1560_U01.th.jpg",
       "roles": [
-        "data"
+        "thumbnail"
       ],
-      "creation_date": "2011-12-23T17:12:05.000",
-      "file:size": 2048,
-      "type_image": "Product"
-    },
-    "PULSER_SPECTRA_COLS.FMT": {
-      "href": "https://pds-geosciences.wustl.edu/ody/ody-m-grs-2-edr-v1/odge1_xxxx/label/pulser_spectra_cols.fmt",
-      "type": "application/octet-stream",
-      "title": "PULSER_SPECTRA_COLS.FMT",
-      "description": "LABEL FORMAT FILE",
-      "roles": [
-        "metadata"
-      ],
-      "creation_date": "2025-03-25T10:29:20.539",
-      "file:size": 4096,
-      "type_image": "Referenced"
+      "type": "image/jpeg"
     }
   },
   "links": [
     {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-grs-pulsrs/items/PULSER_SPECTRA_20051122",
       "rel": "self",
-      "type": "application/geo+json",
-      "title": "This item"
+      "href": "https://example.org/collections/MRO-M-HIRISE-5-DTM-V1.0/items/DTEEC_001336_1560_001534_1560_U01",
+      "type": "application/geo+json"
     },
     {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/",
       "rel": "root",
-      "type": "application/json",
-      "title": "STAC API root"
+      "href": "https://example.org/",
+      "type": "application/json"
     },
     {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-grs-pulsrs",
       "rel": "collection",
-      "type": "application/json",
-      "title": "Collection: mars-ody-grs-pulsrs"
+      "href": "https://example.org/collections/MRO-M-HIRISE-5-DTM-V1.0",
+      "type": "application/json"
     },
     {
-      "href": "https://odestac.staging.157.136.252.249.nip.io/collections/mars-ody-grs-pulsrs",
       "rel": "parent",
-      "type": "application/json",
-      "title": "Parent collection"
+      "href": "https://example.org/collections/MRO-M-HIRISE-5-DTM-V1.0",
+      "type": "application/json"
     },
     {
-      "href": "https://ode.rsl.wustl.edu/mars/indexproductpage.aspx?product_id=PULSER_SPECTRA_20051122&product_idGeo=26757775",
-      "rel": "about",
-      "type": "text/html",
-      "title": "Product landing page"
+      "rel": "via",
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/",
+      "title": "Source PDS3 archive volume for this item"
     },
     {
-      "href": "https://ode.rsl.wustl.edu/mars/productfiles.aspx?product_id=PULSER_SPECTRA_20051122&product_idGeo=26757775",
-      "rel": "about",
-      "type": "text/html",
-      "title": "All files for this product"
-    },
-    {
-      "href": "http://grspds.lpl.arizona.edu/",
-      "rel": "about",
-      "type": "text/html",
-      "title": "External reference"
+      "rel": "derived_from",
+      "href": "PSP_001336_1560_RED_A_01_ORTHO",
+      "type": "application/geo+json",
+      "title": "Orthorectified image: PSP_001336_1560_RED_A_01_ORTHO"
     }
-  ],
-  "stac_extensions": [
-    "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
-    "https://pdssp.github.io/stacplanet/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/product/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/file/v2.1.0/schema.json",
-    "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
-    "https://stac-extensions.github.io/version/v1.2.0/schema.json"
-  ],
-  "collection": "mars-ody-grs-pulsrs",
-  "geometry": null
+  ]
 }

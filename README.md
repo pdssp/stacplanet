@@ -1,7 +1,7 @@
 # STACPlanet Extension Specification
 
 - **Title:** PDSSP Planetary Data Schema for STACPlanet
-- **Identifier:** <https://pdssp.github.io/stacplanet/v1.0.0/schema.json>
+- **Identifier:** <https://pdssp.github.io/stacplanet/v1.1.0/schema.json>
 - **Field Name Prefix:** pdssp
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
@@ -47,11 +47,12 @@ This extension builds upon the following STAC extensions:
 
 ## JSON Schema
 
-- [STACPlanet Schema v1.0.0](json-schema/schema.json) - Main schema file
+- [STACPlanet Schema v1.1.0](json-schema/schema.json) - Main schema file
 
 The schema is also available at:
 
-- **Latest:** <https://pdssp.github.io/stacplanet/v1.0.0/schema.json>
+- **Latest:** <https://pdssp.github.io/stacplanet/v1.1.0/schema.json>
+- **Previous:** <https://pdssp.github.io/stacplanet/v1.0.0/schema.json>
 - **Repository:** <https://github.com/pdssp/stacplanet>
 
 ## Fields
@@ -111,7 +112,7 @@ Both Items and Collections **must** include the following in `stac_extensions`:
 - `https://stac-extensions.github.io/ssys/v1.1.1/schema.json`
 - `https://stac-extensions.github.io/processing/v1.2.0/schema.json`
 - `https://stac-extensions.github.io/product/v1.0.0/schema.json`
-- `https://pdssp.github.io/stacplanet/v1.0.0/schema.json`
+- `https://pdssp.github.io/stacplanet/v1.1.0/schema.json`
 
 Additionally:
 
@@ -240,10 +241,10 @@ The JSON schema is automatically deployed to GitHub Pages when a new release is 
 
 ### Current Deployment
 
-The v1.0.0 schema is available at:
+The v1.1.0 schema is available at:
 
 ```text
-https://pdssp.github.io/stacplanet/v1.0.0/schema.json
+https://pdssp.github.io/stacplanet/v1.1.0/schema.json
 ```
 
 ### Creating a New Release

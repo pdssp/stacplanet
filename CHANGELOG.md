@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.1.0] - 2026-10-18
+
 ### Added
 
 - `pdssp:wavelength_type` optional field (Item, and Collection summaries):
@@ -14,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Infrared, UV, ...) from the PDSSP Thesaurus Wavelength Type scheme
   (<https://pdssp.github.io/pdssp-ontology/schemas/wavelength-type.json>). The thesaurus gives the domain of each spectral band, so the
   value can be derived from the band names.
+
+## [v1.0.0] - 2026-10-18
+
+The `v1.0.0` tag was first set on 2026-06-23 and moved on 2026-10-18 to
+include the changes below; the first content is listed at the end.
 
 ### Changed (breaking)
 
@@ -90,9 +97,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   collection/item pair, exercising every field this profile actually
   requires (including the new `proj:wkt2` requirement).
 
-## [v1.0.0] - 2026-06-23
+### First tag (2026-06-23)
 
-### Added
+Added:
 
 - Initial version of the STACPlanet extension for PDSSP planetary data
 - JSON Schema defining PDSSP-specific fields and constraints
@@ -101,16 +108,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Complete documentation in README.md
 - GitHub Actions workflow for schema deployment
 
-### Changed
+Changed:
 
 - Updated package name from stac-extension-template to stacplanet
 - Configured schema mapping for <https://pdssp.github.io/stacplanet/v1.0.0/schema.json>
 
-### Fixed
+Fixed:
 
 - Corrected stac_extensions validation structure in schema (changed contains/allOf to allOf/contains)
 - Added required properties field to Collection examples
 - Fixed JSON formatting in collection.json
 
-[Unreleased]: <https://github.com/pdssp/stacplanet/compare/v1.0.0...HEAD>
+[Unreleased]: <https://github.com/pdssp/stacplanet/compare/v1.1.0...HEAD>
+[v1.1.0]: <https://github.com/pdssp/stacplanet/tree/v1.1.0>
 [v1.0.0]: <https://github.com/pdssp/stacplanet/tree/v1.0.0>

@@ -7,7 +7,7 @@
     "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v2.0.0/schema.json",
     "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
-    "https://pdssp.github.io/stacplanet/v1.0.0/schema.json"
+    "https://pdssp.github.io/stacplanet/v1.1.0/schema.json"
   ],
   "id": "DTEEC_001336_1560_001534_1560_U01",
   "collection": "MRO-M-HIRISE-5-DTM-V1.0",

@@ -8,7 +8,7 @@
     "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
     "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
     "https://stac-extensions.github.io/eo/v2.0.0/schema.json",
-    "https://pdssp.github.io/stacplanet/v1.0.0/schema.json"
+    "https://pdssp.github.io/stacplanet/v1.1.0/schema.json"
   ],
   "id": "MRO-M-HIRISE-5-DTM-V1.0",
   "title": "MRO MARS HIGH RESOLUTION IMAGING SCIENCE EXPERIMENT DTM V1.0",

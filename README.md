@@ -70,19 +70,19 @@ The fields in the table below can be used in these parts of STAC documents:
 
 | Field Name | Type | Description |
 | ----------- | ---- | ----------- |
-| `ssys:targets` | array | **REQUIRED**. List of solar system targets. At least one required. Free text (e.g. "Mars", "Deimos", "Mgs" for a spacecraft cross-calibration target) -- matches the real `ssys` v1.1.1 extension's own unconstrained field, not a short enum of common bodies |
-| `ssys:target_class` | string | **REQUIRED**. Classification of the primary target -- the real `ssys` v1.1.1 enum: asteroid, dwarf_planet, planet, satellite, comet, exoplanet, interplanetary_medium, sample, sky, spacecraft, spacejunk, star, calibration |
+| `ssys:targets` | array | **REQUIRED**. List of solar system targets, at least one, no duplicates. Each value is a target of the PDSSP Thesaurus ([`target.json`](https://pdssp.github.io/pdssp-ontology/schemas/target.json)), e.g. "Mars", "Phobos", "Mars Global Surveyor" |
+| `ssys:target_class` | string | **REQUIRED**. Classification of the primary target ([`target-class.json`](https://pdssp.github.io/pdssp-ontology/schemas/target-class.json)): the PADC EPN target classes that `ssys` v1.1.1 accepts |
 | `version` | string | **REQUIRED**. Version identifier for the data product |
-| `product:type` | string | **REQUIRED**. Type of the data product, from the [PDSSP Thesaurus](https://pdssp.github.io/pdssp-ontology/thesaurus/)'s Product Type concept scheme. Supported: Image, Image mosaic, Orthoimage, Anaglyph, Digital elevation model, Point cloud |
-| `processing:level` | string | **REQUIRED**. Processing level. Supported: Ancillary, Raw, Calibrated, Derived |
+| `product:type` | string | **REQUIRED**. Type of the data product ([`product-type.json`](https://pdssp.github.io/pdssp-ontology/schemas/product-type.json)) |
+| `processing:level` | string | **REQUIRED**. Processing level ([`processing-level.json`](https://pdssp.github.io/pdssp-ontology/schemas/processing-level.json)) |
 | `proj:wkt2` | string | **REQUIRED when `stac_extensions` includes the `projection` extension** (in practice: whenever the Item has a non-null `geometry`, since that already requires `projection` -- see "Required STAC Extensions" below) |
 
 #### For Collections
 
 | Field Name | Type | Description |
 | ----------- | ---- | ----------- |
-| `ssys:targets` | array | **REQUIRED**, at the Collection's own top level (not nested in `properties` -- a STAC Collection has none -- nor in `summaries`: a collection's own target(s) are a fact about the collection itself, same status as its `license`). Same free-text field as the Item's own `ssys:targets` |
-| `ssys:target_class` | string | **REQUIRED**, same top-level placement, same enum as the Item's own `ssys:target_class` |
+| `ssys:targets` | array | **REQUIRED**, at the Collection's own top level (not nested in `properties` -- a STAC Collection has none -- nor in `summaries`: a collection's own target(s) are a fact about the collection itself, same status as its `license`). Same values as the Item's own `ssys:targets` |
+| `ssys:target_class` | string | **REQUIRED**, same top-level placement, same values as the Item's own `ssys:target_class` |
 | `summaries.product:type` | array | **REQUIRED**. Every `product:type` value this collection's items actually use, from the PDSSP Thesaurus's Product Type concept scheme |
 | `summaries.processing:level` | array | **REQUIRED**. Every `processing:level` value this collection's items actually use |
 | `proj:wkt2` | string | **REQUIRED when `stac_extensions` includes the `projection` extension** |
@@ -95,7 +95,7 @@ convention as `summaries.product:type`/`summaries.processing:level` above.
 
 | Field Name | Type | Description |
 | ----------- | ---- | ----------- |
-| `pdssp:method` | string | How the product was acquired or produced (the technique), from the [PDSSP Thesaurus](https://pdssp.github.io/pdssp-ontology/thesaurus/)'s Method concept scheme. Supported: Panchromatic imaging, Multispectral imaging, Hyperspectral imaging, Visible light imaging, Infrared imaging, Thermal imaging, Radar imaging, Microwave imaging, Lidar, Aerial photography, Photogrammetry, Stereoscopic imaging, Remote sensing |
+| `pdssp:method` | string | How the product was acquired or produced (the technique) ([`method.json`](https://pdssp.github.io/pdssp-ontology/schemas/method.json)) |
 
 `pdssp:solar_longitude`/`pdssp:solar_distance`/`pdssp:map_resolution`/
 `pdssp:map_scale` were removed (2026-09-29): solar-geometry fields belong
@@ -138,16 +138,39 @@ For planetary data products:
   yet produced by any current PDSSP collection): use `geometry: null`,
   which relaxes the `projection`/`proj:wkt2` requirement
 
-### Target Enumeration
+### Controlled Values
 
-`ssys:targets` is free text (e.g. "Mars", "Deimos", "Mgs" for a spacecraft
-cross-calibration target, "Sky"/"Cal" for a non-body calibration frame),
-matching the real `ssys` v1.1.1 extension's own unconstrained field --
-not restricted to a short list of common bodies. `ssys:target_class` IS
-constrained, to that same extension's own real enum: asteroid,
-dwarf_planet, planet, satellite, comet, exoplanet,
+The profile no longer copies value lists. Every controlled field points
+(`$ref`) at a JSON Schema generated from the
+[PDSSP Thesaurus](https://pdssp.github.io/pdssp-ontology/vocab/) by the
+`pdssp-ontology` CI, one per concept scheme:
+
+| Field | Schema |
+| ----- | ------ |
+| `ssys:targets` (each value) | <https://pdssp.github.io/pdssp-ontology/schemas/target.json> |
+| `ssys:target_class` | <https://pdssp.github.io/pdssp-ontology/schemas/target-class.json> |
+| `product:type` | <https://pdssp.github.io/pdssp-ontology/schemas/product-type.json> |
+| `processing:level` | <https://pdssp.github.io/pdssp-ontology/schemas/processing-level.json> |
+| `pdssp:method` | <https://pdssp.github.io/pdssp-ontology/schemas/method.json> |
+
+Adding a value is a change to the thesaurus, not to this profile.
+Validators fetch the schemas over HTTP (`stac-node-validator` does).
+
+**Targets.** `ssys:targets` takes the preferred label of a thesaurus
+target ("Mars", "Phobos", "Mars Global Surveyor",
+"C/2013 A1 (Siding Spring)"), without duplicates. Source spellings
+("MARS", "Mgs", "Jupitr") must be normalised before ingestion, with the
+normaliser published by the thesaurus (`search/facets.json`). An unknown
+target is rejected until it is added to the thesaurus. A generic "Comet"
+is rejected too: name the comet.
+
+**Target classes.** `ssys:target_class` takes a PADC EPN target-class
+term, restricted to the 13 values the `ssys` v1.1.1 extension accepts:
+asteroid, dwarf_planet, planet, satellite, comet, exoplanet,
 interplanetary_medium, sample, sky, spacecraft, spacejunk, star,
-calibration.
+calibration. PADC also has interstellar-object and rogue-planet, which
+`ssys` does not accept yet. The thesaurus gives the class of every
+target, so it can be derived from `ssys:targets`.
 
 ### Product Types
 

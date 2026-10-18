@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed (breaking)
+
+- Controlled values are no longer copied into the profile: `product:type`,
+  `processing:level`, `pdssp:method` and `ssys:target_class` (Item, and
+  Collection fields and summaries) now `$ref` the JSON Schemas generated
+  from the PDSSP Thesaurus, one per concept scheme
+  (<https://pdssp.github.io/pdssp-ontology/schemas/>). Same values as before.
+- `ssys:targets` (Item and Collection) is now controlled: each value must
+  be a target of the PDSSP Thesaurus
+  (<https://pdssp.github.io/pdssp-ontology/schemas/target.json>),
+  with no duplicates (`uniqueItems`). Source spellings ("MARS", "Mgs",
+  "Jupitr") and generic "Comet" values are rejected; normalise them
+  before ingestion.
+
 ### Added
 
 - `pdssp:method` optional field (Item and Collection): how a product was

@@ -90,12 +90,14 @@ The fields in the table below can be used in these parts of STAC documents:
 ### Optional PDSSP-Specific Fields
 
 The following fields are specific to the PDSSP extension. On a Collection
-these are summarized as `summaries.pdssp:method` (an array), same
+these are summarized as `summaries.pdssp:method` and
+`summaries.pdssp:wavelength_type` (arrays), same
 convention as `summaries.product:type`/`summaries.processing:level` above.
 
 | Field Name | Type | Description |
 | ----------- | ---- | ----------- |
 | `pdssp:method` | string | How the product was acquired or produced (the technique) ([`method.json`](https://pdssp.github.io/pdssp-ontology/schemas/method.json)) |
+| `pdssp:wavelength_type` | array | Spectral domains of the data, IVOA messenger terms such as Optical, Infrared, UV ([`wavelength-type.json`](https://pdssp.github.io/pdssp-ontology/schemas/wavelength-type.json)), no duplicates. Derivable from the band names |
 
 `pdssp:solar_longitude`/`pdssp:solar_distance`/`pdssp:map_resolution`/
 `pdssp:map_scale` were removed (2026-09-29): solar-geometry fields belong
@@ -152,6 +154,7 @@ The profile no longer copies value lists. Every controlled field points
 | `product:type` | <https://pdssp.github.io/pdssp-ontology/schemas/product-type.json> |
 | `processing:level` | <https://pdssp.github.io/pdssp-ontology/schemas/processing-level.json> |
 | `pdssp:method` | <https://pdssp.github.io/pdssp-ontology/schemas/method.json> |
+| `pdssp:wavelength_type` (each value) | <https://pdssp.github.io/pdssp-ontology/schemas/wavelength-type.json> |
 
 Adding a value is a change to the thesaurus, not to this profile.
 Validators fetch the schemas over HTTP (`stac-node-validator` does).

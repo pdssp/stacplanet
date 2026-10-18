@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `pdssp:wavelength_type` optional field (Item, and Collection summaries):
+  the spectral domains of the data, IVOA messenger terms (Optical,
+  Infrared, UV, ...) from the PDSSP Thesaurus Wavelength Type scheme
+  (<https://pdssp.github.io/pdssp-ontology/schemas/wavelength-type.json>). The thesaurus gives the domain of each spectral band, so the
+  value can be derived from the band names.
+
 ### Changed (breaking)
 
 - Controlled values are no longer copied into the profile: `product:type`,

@@ -75,7 +75,8 @@
             "ssys:target_class",
             "version",
             "product:type",
-            "processing:level"
+            "processing:level",
+            "pdssp:method"
           ],
           "properties": {
             "ssys:targets": {
@@ -133,6 +134,22 @@
               "uniqueItems": true,
               "description": "Spectral domains of the data: IVOA messenger terms (Optical, Infrared, UV, ...) from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Wavelength Type scheme. Derivable from the band names: each band of the thesaurus gives the domain of its centre wavelength."
             }
+          },
+          "if": {
+            "properties": {
+              "product:type": {
+                "enum": [
+                  "Image",
+                  "Image mosaic",
+                  "Orthoimage"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "pdssp:wavelength_type"
+            ]
           }
         },
         "geometry": {

@@ -1,0 +1,146 @@
+{
+  "type": "Feature",
+  "stac_version": "1.1.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+    "https://stac-extensions.github.io/product/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/ssys/v1.1.1/schema.json",
+    "https://pdssp.github.io/stacplanet/v1.1.0/schema.json"
+  ],
+  "id": "PSP_001336_1560_RED",
+  "collection": "MRO-M-HIRISE-3-RDR-V1.0",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -33.67700000000002,
+          -23.9697
+        ],
+        [
+          -33.553999999999974,
+          -23.9697
+        ],
+        [
+          -33.553999999999974,
+          -23.7115
+        ],
+        [
+          -33.67700000000002,
+          -23.7115
+        ],
+        [
+          -33.67700000000002,
+          -23.9697
+        ]
+      ]
+    ]
+  },
+  "bbox": [
+    -33.67700000000002,
+    -23.9697,
+    -33.553999999999974,
+    -23.7115
+  ],
+  "properties": {
+    "datetime": "2006-11-08T13:48:04Z",
+    "instruments": [
+      "HIGH RESOLUTION IMAGING SCIENCE EXPERIMENT (HIRISE)"
+    ],
+    "pds:instrument_id": "HIRISE",
+    "pds:platform_id": "MRO",
+    "platform": "MARS RECONNAISSANCE ORBITER (MRO)",
+    "mission": "MARS RECONNAISSANCE ORBITER (MRO)",
+    "description": "HiRISE red-band map-projected image of west Eberswalde Crater, one of the two stereo observations used to build the DTEEC_001336_1560_001534_1560_U01 terrain model",
+    "gsd": 0.25,
+    "version": "1",
+    "product:type": "Image",
+    "processing:level": "Derived",
+    "pdssp:method": "Infrared imaging",
+    "pdssp:wavelength_type": [
+      "Infrared"
+    ],
+    "proj:shape": [
+      60761,
+      27245
+    ],
+    "proj:code": "IAU_2015:49902",
+    "proj:wkt2": "GEODCRS[\"Mars (2015) / Ocentric\",\n    DATUM[\"Mars (2015)\",\n    \tELLIPSOID[\"Mars (2015)\", 3396190, 169.8944472236118,\n\t\tLENGTHUNIT[\"metre\", 1, ID[\"EPSG\", 9001]]],\n\t\tANCHOR[\"Viking 1 lander : 47.95137 W\"]],\n    \tPRIMEM[\"Reference Meridian\", 0,\n            ANGLEUNIT[\"degree\", 0.0174532925199433, ID[\"EPSG\", 9122]]],\n\tCS[spherical, 2],\n\t    AXIS[\"planetocentric latitude (U)\", north,\n\t        ORDER[1],\n\t        ANGLEUNIT[\"degree\", 0.0174532925199433]],\n\t    AXIS[\"planetocentric longitude (V)\", east,\n\t        ORDER[2],\n\t        ANGLEUNIT[\"degree\", 0.0174532925199433]],\n\tID[\"IAU\", 49902, 2015],\n\tREMARK[\"Source of IAU Coordinate systems: doi:10.1007/s10569-017-9805-5\"]]",
+    "proj:centroid": {
+      "lon": -33.6155,
+      "lat": -23.840600000000002
+    },
+    "ssys:targets": [
+      "Mars"
+    ],
+    "ssys:target_class": "planet",
+    "pds:volume_id": "MROH_0001",
+    "pds:file_name_specification": "RDR/PSP/ORB_001300_001399/PSP_001336_1560/PSP_001336_1560_RED.IMG",
+    "pds:product_id": "PSP_001336_1560_RED",
+    "pds:product_version_id": "1",
+    "license": "CC0-1.0"
+  },
+  "assets": {
+    "data": {
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/RDR/PSP/ORB_001300_001399/PSP_001336_1560/PSP_001336_1560_RED.IMG",
+      "roles": [
+        "data"
+      ],
+      "title": "PDS3 product",
+      "type": "image/x-pds",
+      "bands": [
+        {
+          "name": "Red",
+          "description": "HiRISE red colour band (BR filter, centre wavelength 0.7 micrometer, bandwidth 0.25 micrometer) covering roughly 6000 pixels swath width: map-projected CCD lines are mosaicked in the along-track direction only, so the product remains a single observation Image, not an Image mosaic.",
+          "data_type": "uint16",
+          "raster:bits_per_sample": 16,
+          "nodata": 0,
+          "raster:spatial_resolution": 0.25
+        }
+      ]
+    },
+    "browse": {
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/RDR/PSP/ORB_001300_001399/PSP_001336_1560/PSP_001336_1560_RED.NOP.jpg",
+      "roles": [
+        "overview"
+      ],
+      "type": "image/jpeg"
+    },
+    "thumbnail": {
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/RDR/PSP/ORB_001300_001399/PSP_001336_1560/PSP_001336_1560_RED.th.jpg",
+      "roles": [
+        "thumbnail"
+      ],
+      "type": "image/jpeg"
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.org/collections/MRO-M-HIRISE-3-RDR-V1.0/items/PSP_001336_1560_RED",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "root",
+      "href": "https://example.org/",
+      "type": "application/json"
+    },
+    {
+      "rel": "collection",
+      "href": "https://example.org/collections/MRO-M-HIRISE-3-RDR-V1.0",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "https://example.org/collections/MRO-M-HIRISE-3-RDR-V1.0",
+      "type": "application/json"
+    },
+    {
+      "rel": "via",
+      "href": "https://hirise-pds.lpl.arizona.edu/PDS/",
+      "title": "Source PDS3 archive volume for this item"
+    }
+  ]
+}

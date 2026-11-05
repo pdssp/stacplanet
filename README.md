@@ -42,6 +42,9 @@ This extension builds upon the following STAC extensions:
 
 - [Item example](examples/item.json): Shows the basic usage of the extension in a
   STAC Item (a HiRISE Digital Terrain Model from MRO, produced by photogrammetry)
+- [Item example 2](examples/item2.json): Shows the usage of the extension in a
+  STAC Item with `product:type`: Image (a HiRISE red-band image from MRO), where
+  the conditional `pdssp:wavelength_type` requirement applies
 - [Collection example](examples/collection.json): Shows the basic usage of the
   extension in a STAC Collection (the HiRISE DTM collection)
 
@@ -76,6 +79,7 @@ The fields in the table below can be used in these parts of STAC documents:
 | `version` | string | **REQUIRED**. Version identifier for the data product |
 | `product:type` | string | **REQUIRED**. Type of the data product ([`product-type.json`](https://pdssp.github.io/pdssp-ontology/schemas/product-type.json)) |
 | `processing:level` | string | **REQUIRED**. Processing level ([`processing-level.json`](https://pdssp.github.io/pdssp-ontology/schemas/processing-level.json)) |
+| `pdssp:method` | string | **REQUIRED**. How the product was acquired or produced (the technique) ([`method.json`](https://pdssp.github.io/pdssp-ontology/schemas/method.json)) |
 | `proj:wkt2` | string | **REQUIRED when `stac_extensions` includes the `projection` extension** (in practice: whenever the Item has a non-null `geometry`, since that already requires `projection` -- see "Required STAC Extensions" below) |
 
 #### For Collections
@@ -88,16 +92,18 @@ The fields in the table below can be used in these parts of STAC documents:
 | `summaries.processing:level` | array | **REQUIRED**. Every `processing:level` value this collection's items actually use |
 | `proj:wkt2` | string | **REQUIRED when `stac_extensions` includes the `projection` extension** |
 
-### Optional PDSSP-Specific Fields
+### PDSSP-Specific Fields
 
-The following fields are specific to the PDSSP extension. On a Collection
-these are summarized as `summaries.pdssp:method` and
-`summaries.pdssp:wavelength_type` (arrays), same
+The two fields specific to the PDSSP extension are `pdssp:method` and
+`pdssp:wavelength_type`. On a Collection these are summarized as
+`summaries.pdssp:method` and `summaries.pdssp:wavelength_type` (arrays), same
 convention as `summaries.product:type`/`summaries.processing:level` above.
+On an Item, `pdssp:method` is **REQUIRED** and `pdssp:wavelength_type` is
+**REQUIRED when `product:type` is Image, Image mosaic or Orthoimage**,
+optional otherwise (see "Product Types" below).
 
 | Field Name | Type | Description |
 | ----------- | ---- | ----------- |
-| `pdssp:method` | string | How the product was acquired or produced (the technique) ([`method.json`](https://pdssp.github.io/pdssp-ontology/schemas/method.json)) |
 | `pdssp:wavelength_type` | array | Spectral domains of the data, IVOA messenger terms such as Optical, Infrared, UV ([`wavelength-type.json`](https://pdssp.github.io/pdssp-ontology/schemas/wavelength-type.json)), no duplicates. Derivable from the band names |
 
 `pdssp:solar_longitude`/`pdssp:solar_distance`/`pdssp:map_resolution`/
@@ -194,6 +200,10 @@ to whichever proxy needs it, not enforced here.
 - **Digital elevation model**: a raster of elevation values, typically produced by stereo photogrammetry
 - **Point cloud**: an unstructured set of 3D points, before being gridded into a digital elevation model
 
+An Item whose `product:type` is **Image**, **Image mosaic** or
+**Orthoimage** must also provide `pdssp:wavelength_type`; for the other
+product types the field is optional.
+
 Currently scoped to what PDSSP's own imaging collections (CTX, HiRISE
 EDR/RDR/DTM/anaglyph) actually produce; a non-imaging instrument
 (spectrometer, in-situ sampler, ...) has no matching value yet.
@@ -211,7 +221,7 @@ The `processing:level` field indicates the processing stage:
 
 The `pdssp:method` field indicates how the product was acquired or
 produced (as opposed to `product:type`'s "what" and `processing:level`'s
-"how far processed") -- from the
+"how far processed"); it is **REQUIRED on Items**. Values come from the
 [PDSSP Thesaurus](https://pdssp.github.io/pdssp-ontology/thesaurus/)'s
 Method concept scheme:
 

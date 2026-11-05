@@ -158,6 +158,9 @@ The profile no longer copies value lists. Every controlled field points
 | ----- | ------ |
 | `ssys:targets` (each value) | <https://pdssp.github.io/pdssp-ontology/schemas/target.json> |
 | `ssys:target_class` | <https://pdssp.github.io/pdssp-ontology/schemas/target-class.json> |
+| `platform` | <https://pdssp.github.io/pdssp-ontology/schemas/platform.json> |
+| `instruments` (each value) | <https://pdssp.github.io/pdssp-ontology/schemas/instrument.json> |
+| `mission` | <https://pdssp.github.io/pdssp-ontology/schemas/mission.json> |
 | `product:type` | <https://pdssp.github.io/pdssp-ontology/schemas/product-type.json> |
 | `processing:level` | <https://pdssp.github.io/pdssp-ontology/schemas/processing-level.json> |
 | `pdssp:method` | <https://pdssp.github.io/pdssp-ontology/schemas/method.json> |
@@ -181,6 +184,16 @@ interplanetary_medium, sample, sky, spacecraft, spacejunk, star,
 calibration. PADC also has interstellar-object and rogue-planet, which
 `ssys` does not accept yet. The thesaurus gives the class of every
 target, so it can be derived from `ssys:targets`.
+
+**Platforms, instruments, missions.** The STAC common metadata fields
+`platform`, `mission` and `instruments` (Item properties, and the
+matching Collection `summaries` entries) take the thesaurus Platform,
+Mission and Instrument values (notation, else prefLabel) -- e.g.
+"Mars Reconnaissance Orbiter", "HiRISE", "Context Camera" -- not the
+PDS-style spellings found in archive labels ("MARS RECONNAISSANCE
+ORBITER (MRO)", "HIGH RESOLUTION IMAGING SCIENCE EXPERIMENT (HIRISE)"),
+which must be normalised before ingestion. The purpose-specific
+`pds:platform_id`/`pds:instrument_id` fields are not affected.
 
 ### Product Types
 

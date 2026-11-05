@@ -65,10 +65,10 @@
   ],
   "summaries": {
     "instruments": [
-      "HIRISE"
+      "HiRISE"
     ],
     "platform": [
-      "MARS RECONNAISSANCE ORBITER"
+      "Mars Reconnaissance Orbiter"
     ],
     "eo:center_wavelength": {
       "minimum": 0.7,

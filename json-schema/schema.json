@@ -101,6 +101,30 @@
               "minLength": 1,
               "description": "Version identifier for the data product. Mandatory for items."
             },
+            "platform": {
+              "description": "Host platform that carried the sensors (STAC common metadata): a value of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Platform scheme. Source spellings (\"MARS RECONNAISSANCE ORBITER (MRO)\") must be normalised before ingestion.",
+              "allOf": [
+                {
+                  "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/platform.json"
+                }
+              ]
+            },
+            "mission": {
+              "description": "Mission the data product belongs to (STAC common metadata): a value of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Mission scheme.",
+              "allOf": [
+                {
+                  "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/mission.json"
+                }
+              ]
+            },
+            "instruments": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/instrument.json"
+              },
+              "description": "Instruments that captured the data (STAC common metadata): each a value of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Instrument scheme (e.g. \"HiRISE\", \"Context Camera\"), no duplicates."
+            },
             "product:type": {
               "description": "Type of the data product: a concept of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Product Type scheme -- deliberately NOT the EPN-TAP dataproduct_type vocabulary, which is coarser (no orthoimage or anaglyph); the EPN-TAP mapping is in the thesaurus mapping sets. This field is mandatory.",
               "allOf": [
@@ -297,6 +321,33 @@
               },
               "minItems": 1,
               "description": "Every pdssp:method value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Method scheme."
+            },
+            "instruments": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/instrument.json"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Every instruments value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Instrument scheme."
+            },
+            "platform": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/platform.json"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Every platform value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Platform scheme."
+            },
+            "mission": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/mission.json"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Every mission value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Mission scheme."
             },
             "pdssp:wavelength_type": {
               "type": "array",

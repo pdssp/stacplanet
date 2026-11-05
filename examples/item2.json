@@ -47,12 +47,12 @@
   "properties": {
     "datetime": "2006-11-08T13:48:04Z",
     "instruments": [
-      "HIGH RESOLUTION IMAGING SCIENCE EXPERIMENT (HIRISE)"
+      "HiRISE"
     ],
     "pds:instrument_id": "HIRISE",
     "pds:platform_id": "MRO",
-    "platform": "MARS RECONNAISSANCE ORBITER (MRO)",
-    "mission": "MARS RECONNAISSANCE ORBITER (MRO)",
+    "platform": "Mars Reconnaissance Orbiter",
+    "mission": "Mars Reconnaissance Orbiter",
     "description": "HiRISE red-band map-projected image of west Eberswalde Crater, one of the two stereo observations used to build the DTEEC_001336_1560_001534_1560_U01 terrain model",
     "gsd": 0.25,
     "version": "1",

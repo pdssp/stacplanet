@@ -1,0 +1,340 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pdssp.github.io/stacplanet/v1.1.0/schema.json",
+  "title": "PDSSP Planetary Data Schema for STACPlanet Items and Collections",
+  "description": "Profile defining PDSSP-specific constraints for planetary data products. Applies to both STAC Items and Collections. Required extensions on an Item depend on whether the product is located: a null geometry relaxes the projection requirement.",
+  "type": "object",
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "const": "Feature"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/definitions/item"
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "const": "Collection"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/definitions/collection"
+      }
+    }
+  ],
+  "definitions": {
+    "item": {
+      "type": "object",
+      "required": [
+        "stac_extensions",
+        "properties",
+        "geometry"
+      ],
+      "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "allOf": [
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/ssys/"
+              }
+            },
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/product/"
+              }
+            },
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/processing/"
+              }
+            }
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "required": [
+            "ssys:targets",
+            "ssys:target_class",
+            "version",
+            "product:type",
+            "processing:level",
+            "pdssp:method"
+          ],
+          "properties": {
+            "ssys:targets": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/target.json"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "List of solar system targets covered by the data, each the preferred label of a concept of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Target scheme (e.g. \"Mars\", \"Phobos\", \"Mars Global Surveyor\", \"C/2013 A1 (Siding Spring)\"). At least one, no duplicates. Source spellings (\"MARS\", \"Mgs\", \"Jupitr\") must be normalised before ingestion (normaliser in search/facets.json of the thesaurus); an unknown target is rejected until it is added to the thesaurus."
+            },
+            "ssys:target_class": {
+              "description": "Classification of the primary target: a notation of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Target Class scheme, i.e. a PADC EPN target-class term, restricted to the 13 values the ssys v1.1.1 extension accepts. The class of each target is given by the thesaurus (pdssp:targetClass), so it can be derived from ssys:targets.",
+              "allOf": [
+                {
+                  "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/target-class.json"
+                }
+              ]
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Version identifier for the data product. Mandatory for items."
+            },
+            "product:type": {
+              "description": "Type of the data product: a concept of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Product Type scheme -- deliberately NOT the EPN-TAP dataproduct_type vocabulary, which is coarser (no orthoimage or anaglyph); the EPN-TAP mapping is in the thesaurus mapping sets. This field is mandatory.",
+              "allOf": [
+                {
+                  "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/product-type.json"
+                }
+              ]
+            },
+            "processing:level": {
+              "description": "Processing level of the data product: a concept of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Processing Level scheme (PDS4 levels). This field is mandatory.",
+              "allOf": [
+                {
+                  "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/processing-level.json"
+                }
+              ]
+            },
+            "pdssp:method": {
+              "description": "How the product was acquired or produced (the technique): a concept of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Method scheme, which reuses the USGS Thesaurus \"methods\" facet and adds Photogrammetry and Stereoscopic imaging.",
+              "allOf": [
+                {
+                  "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/method.json"
+                }
+              ]
+            },
+            "pdssp:wavelength_type": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/wavelength-type.json"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Spectral domains of the data: IVOA messenger terms (Optical, Infrared, UV, ...) from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Wavelength Type scheme. Derivable from the band names: each band of the thesaurus gives the domain of its centre wavelength."
+            }
+          },
+          "if": {
+            "properties": {
+              "product:type": {
+                "enum": [
+                  "Image",
+                  "Image mosaic",
+                  "Orthoimage"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "pdssp:wavelength_type"
+            ]
+          }
+        },
+        "geometry": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "geometry"
+            ],
+            "properties": {
+              "geometry": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stac_extensions": {
+                "allOf": [
+                  {
+                    "contains": {
+                      "type": "string",
+                      "pattern": "stac-extensions\\.github\\.io/projection/"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "stac_extensions"
+            ],
+            "properties": {
+              "stac_extensions": {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/projection/"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "properties": {
+                "required": [
+                  "proj:wkt2"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "collection": {
+      "type": "object",
+      "required": [
+        "stac_extensions",
+        "license",
+        "ssys:targets",
+        "ssys:target_class"
+      ],
+      "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "allOf": [
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/ssys/"
+              }
+            },
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/processing/"
+              }
+            },
+            {
+              "contains": {
+                "type": "string",
+                "pattern": "stac-extensions\\.github\\.io/product/"
+              }
+            }
+          ]
+        },
+        "license": {
+          "type": "string",
+          "description": "License under which the data is provided."
+        },
+        "ssys:targets": {
+          "type": "array",
+          "items": {
+            "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/target.json"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "List of solar system targets covered by this collection -- a top-level Collection field, a fact about the collection itself like its license, each the preferred label of a concept of the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Target scheme (e.g. \"Mars\", \"Phobos\", \"Mars Global Surveyor\", \"C/2013 A1 (Siding Spring)\"). At least one, no duplicates. Source spellings (\"MARS\", \"Mgs\", \"Jupitr\") must be normalised before ingestion (normaliser in search/facets.json of the thesaurus); an unknown target is rejected until it is added to the thesaurus."
+        },
+        "ssys:target_class": {
+          "description": "Classification of this collection's primary target -- same values as the Item field.",
+          "allOf": [
+            {
+              "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/target-class.json"
+            }
+          ]
+        },
+        "summaries": {
+          "type": "object",
+          "required": [
+            "product:type",
+            "processing:level"
+          ],
+          "properties": {
+            "product:type": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/product-type.json"
+              },
+              "minItems": 1,
+              "description": "Every product:type value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Product Type scheme. This field is mandatory."
+            },
+            "processing:level": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/processing-level.json"
+              },
+              "minItems": 1,
+              "description": "Every processing:level value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Processing Level scheme. This field is mandatory."
+            },
+            "pdssp:method": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/method.json"
+              },
+              "minItems": 1,
+              "description": "Every pdssp:method value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Method scheme."
+            },
+            "pdssp:wavelength_type": {
+              "type": "array",
+              "items": {
+                "$ref": "https://pdssp.github.io/pdssp-ontology/schemas/wavelength-type.json"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Every pdssp:wavelength_type value this collection's items actually use, from the PDSSP Thesaurus (https://pdssp.github.io/pdssp-ontology/vocab/) Wavelength Type scheme."
+            }
+          }
+        },
+        "proj:wkt2": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "stac_extensions"
+            ],
+            "properties": {
+              "stac_extensions": {
+                "contains": {
+                  "type": "string",
+                  "pattern": "stac-extensions\\.github\\.io/projection/"
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "proj:wkt2"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -115,7 +115,7 @@ here; the two map-specific fields had no real consumer yet.
 
 Both Items and Collections **must** include the following in `stac_extensions`:
 
-- `https://stac-extensions.github.io/ssys/v1.2.0/schema.json`
+- `https://pdssp.github.io/ssys/v1.2.0/schema.json`
 - `https://stac-extensions.github.io/processing/v1.2.0/schema.json`
 - `https://stac-extensions.github.io/product/v1.1.0/schema.json`
 - `https://pdssp.github.io/stacplanet/v1.1.0/schema.json`

@@ -25,11 +25,11 @@ modern geospatial cataloging systems.
 
 This extension builds upon the following STAC extensions:
 
-- [Solar System (ssys)](https://stac-extensions.github.io/ssys/v1.1.1/schema.json) -
+- [Solar System (ssys)](https://pdssp.github.io/ssys/v1.2.0/schema.json) -
   For solar system target information
 - [Processing](https://stac-extensions.github.io/processing/v1.2.0/schema.json) -
   For processing level metadata
-- [Product](https://stac-extensions.github.io/product/v1.0.0/schema.json) -
+- [Product](https://stac-extensions.github.io/product/v1.1.0/schema.json) -
   For data product type classification
 - [Scientific](https://stac-extensions.github.io/scientific/v1.0.0/schema.json) -
   For scientific metadata (Collections)
@@ -115,9 +115,9 @@ here; the two map-specific fields had no real consumer yet.
 
 Both Items and Collections **must** include the following in `stac_extensions`:
 
-- `https://stac-extensions.github.io/ssys/v1.1.1/schema.json`
+- `https://stac-extensions.github.io/ssys/v1.2.0/schema.json`
 - `https://stac-extensions.github.io/processing/v1.2.0/schema.json`
-- `https://stac-extensions.github.io/product/v1.0.0/schema.json`
+- `https://stac-extensions.github.io/product/v1.1.0/schema.json`
 - `https://pdssp.github.io/stacplanet/v1.1.0/schema.json`
 
 Additionally:

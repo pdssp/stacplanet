@@ -51,7 +51,7 @@
             {
               "contains": {
                 "type": "string",
-                "pattern": "stac-extensions\\.github\\.io/ssys/"
+                "pattern": "pdssp\\.github\\.io/ssys/"
               }
             },
             {
@@ -253,7 +253,7 @@
             {
               "contains": {
                 "type": "string",
-                "pattern": "stac-extensions\\.github\\.io/ssys/"
+                "pattern": "pdssp\\.github\\.io/ssys/"
               }
             },
             {
